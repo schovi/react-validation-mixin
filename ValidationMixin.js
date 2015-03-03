@@ -1,9 +1,7 @@
 'use strict';
 
 require('object.assign').shim();
-var result = require('lodash.result');
-var isEmpty = require('lodash.isempty');
-var isObject = require('lodash.isobject');
+var _ = require('lodash');
 var ValidationFactory = require('./ValidationFactory');
 
 var ValidationMixin = {
@@ -11,10 +9,10 @@ var ValidationMixin = {
    * Check for sane configurations
    */
   componentDidMount: function() {
-    if (this.validatorTypes !== undefined && !isObject(this.validatorTypes)) {
+    if (this.validatorTypes !== undefined && !_.isObject(this.validatorTypes)) {
       throw Error('invalid `validatorTypes` type');
     }
-    if (this.getValidatorData !== undefined && !isObject(this.getValidatorData)) {
+    if (this.getValidatorData !== undefined && !_.isObject(this.getValidatorData)) {
       throw Error('invalid `getValidatorData` type');
     }
   },
@@ -30,8 +28,8 @@ var ValidationMixin = {
       callback = key;
       key = undefined;
     }
-    var schema = result(this, 'validatorTypes') || {};
-    var data = result(this, 'getValidatorData') || this.state;
+    var schema = _.result(this, 'validatorTypes') || {};
+    var data = _.result(this, 'getValidatorData') || this.state;
     var validationErrors = Object.assign({}, this.state.errors, ValidationFactory.validate(schema, data, key));
     this.setState({
       errors: validationErrors
