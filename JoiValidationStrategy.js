@@ -1,5 +1,4 @@
 var Joi = require('joi');
-var union = require('lodash.union');
 
 var JoiValidationStrategy = {
   validate: function(joiSchema, data, key) {
@@ -11,7 +10,7 @@ var JoiValidationStrategy = {
     };
     var errors = this._format(Joi.validate(data, joiSchema, joiOptions));
     if (key === undefined) {
-      union(Object.keys(joiSchema), Object.keys(data)).forEach(function(error) {
+      _.union(Object.keys(joiSchema), Object.keys(data)).forEach(function(error) {
         errors[error] = errors[error] || [];
       });
       return errors;
